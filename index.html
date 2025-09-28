@@ -860,6 +860,45 @@
   .floor { transform: none !important; }
 }
 
+/* Image héro avec dégradé gauche + blend */
+.hero-image { position: relative; height: 420px; } /* tu peux garder 400 */
+.hero-scene { position: relative; overflow: hidden; border-radius: 20px; }
+
+/* L’image occupe toute la scène */
+.hero-photo{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* dégradé vers la gauche (compatible WebKit) */
+  -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 95%);
+  mask-image: linear-gradient(to left, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 95%);
+  /* un léger blend pour harmoniser avec le vert/bleu de la page */
+  mix-blend-mode: normal; /* tu peux tester 'multiply' ou 'soft-light' */
+  filter: saturate(1.05) contrast(1.02);
+}
+
+/* Overlay doux pour un rendu premium et lisible */
+.hero-scene::before{
+  content:"";
+  position:absolute; inset:0;
+  background:
+    linear-gradient(120deg, rgba(13,27,42,0.20), rgba(0,168,132,0.10));
+  pointer-events:none;
+}
+
+/* L'animation ‘barres’ reste au-dessus de l'image */
+.building-animation{
+  position: relative;
+  z-index: 1;
+}
+
+/* Responsive: un peu plus bas sur mobile */
+@media (max-width: 992px){
+  .hero-image{ height: 320px; }
+}
+
 
     </style>
 </head>
@@ -909,18 +948,20 @@
                     </div>
                 </div>
                 <div class="hero-image">
-                    <div class="hero-scene">
-                        <div class="building-animation">
-                            <div class="floor"></div>
-                            <div class="floor"></div>
-                            <div class="floor"></div>
-                            <div class="floor"></div>
-                            <div class="floor"></div>
-                            <div class="floor"></div>
-                            <div class="floor"></div>
-                        </div>
-                    </div>
-                </div>
+  <div class="hero-scene">
+    <!-- AJOUT: image de fond héro -->
+    <img class="hero-photo" src="ASSETS/PAC.png" alt="Quartier résidentiel haut standing">
+    <div class="building-animation">
+      <div class="floor"></div>
+      <div class="floor"></div>
+      <div class="floor"></div>
+      <div class="floor"></div>
+      <div class="floor"></div>
+      <div class="floor"></div>
+      <div class="floor"></div>
+    </div>
+  </div>
+</div>
             </div>
         </div>
         
